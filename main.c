@@ -24,7 +24,7 @@ int main(int argc, char * argv[])
 	//int index = 1;  //用于计数第几个文件 依次打开text1.txt text2.txt ..等
 	int i = 0;  //用于读取文件内容的计数变量
 
-    begin = clock();
+    
 
 	/*//打开regex.txt
 	if ((fp_regex = fopen("regex.txt", "r")) == NULL)
@@ -88,7 +88,7 @@ int main(int argc, char * argv[])
 
         //intf("regex.txt line%d:%s\n", index, regex_text);
         //intf("%s:%s\n", filename, text);
-
+        begin = clock();
         //regexSearch函数 将regex_text的规则 在文本text中找到首先匹配的部分 输出到result缓冲区
         if ((error_index = regexSearch(regex_text, text, result)) == TRUE)
         {
@@ -138,6 +138,8 @@ int main(int argc, char * argv[])
 
 
         }
+        duration = clock() - begin;
+        printf("run time %ld ms \n", duration*1000/CLOCKS_PER_SEC);
     }
 
     //释放本次保存textN.txt内容的缓冲区
@@ -145,8 +147,7 @@ int main(int argc, char * argv[])
 
 
     //程序结束
-    duration = clock() - begin;
-    printf("run time %ld ms \n", duration*1000/CLOCKS_PER_SEC);
+    
 
 	printf("press enter to exit..\n");
 	getchar();
