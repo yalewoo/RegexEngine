@@ -83,7 +83,8 @@ int main(int argc, char * argv[])
     while (TRUE)
     {
         printf("# to exit. please input regex: ");
-        scanf("%s", regex_text);
+        //scanf("%s", regex_text);
+		gets(regex_text);
 
 
         //intf("regex.txt line%d:%s\n", index, regex_text);

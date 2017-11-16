@@ -5,10 +5,10 @@
 #ifndef LEXICAL_ANALYSIS_H
 #define LEXICAL_ANALYSIS_H
 
-/*该模块对外提供void lexicalAnalysis(char * arr, struct regex_list * head)函数
+/* 该模块对外提供void lexicalAnalysis(char * arr, struct regex_list * head)函数
 该函数输入为指向正则表达式字符串的指针 和 保存分词后信息的链表头结点
 该函数会将分词的结果存入链表
-该函数没有返回值*/
+该函数没有返回值 */
 
 int lexicalAnalysis(char * arr, struct regex_list * head);	//把正则规则数组分解为一个个单元存到链表中
 

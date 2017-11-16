@@ -56,7 +56,7 @@ static BOOL match2(const char * pchar, const char ch)
 		case 'W':   if ((ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))   return FALSE; else    return  TRUE;
 		case 'S':   if ((ch == ' ') || (ch == '\t') || (ch == '\n'))   return FALSE; else    return  TRUE;
 		case 'D':   if (ch >= '0' && ch <= '9') return  FALSE;   else    return  TRUE;
-		default: return FALSE;
+		default: return pchar[1] == ch ? TRUE : FALSE;
 		}
 	}
 	return FALSE;
@@ -86,54 +86,26 @@ static BOOL matchPosi2(const char* pchar, const char* text, int i)
 //表示范围的[x]是否和字符匹配
 static BOOL matchRange(const char *pchar, const int len, char ch)
 {
-	int i,j,n,m,k,p,q,d,index;
-	char pos_ch[UNIT_LEN] = {0};                       //[]记录可能储存的所有字符
-	char flag[UNIT_LEN] = {0};                         //记录两个‘-’的下标差，用于判断‘-’是否为普通字符
-	char postion[UNIT_LEN] = {0};                      //记录[]中字符'-'的下标
-	d =0;
-	q=0;
-	index=0;
-	for(i=1,p=0;i<len-1;i++)
+	char dic[UNIT_LEN] = { 0 };
+	int k = 0;
+	for (int i = 1; i < len-1; ++i)
 	{
-		if(pchar[i]!='-'){
-			pos_ch[p]=pchar[i];
-		p++;
-		}
-		else if(pchar[i]=='-')
-		{
-		    postion[q]=i;
-
-		    if(!d)
-            {
-                d++;
-            }
-            else
-            {
-                d++;
-                flag[index]=postion[q]-postion[q-1];
-
-            }
-            if(d==1||flag[index]>2||(flag[index]==2&&index&&flag[index-1]==1)){
-			j=pchar[i+1]-pchar[i-1];
-			for(n=0;n<j;n++)
-			{
-				pos_ch[p]=pchar[i-1]+1+n;
-				p++;
-			}
-            }
-            else {
-                pos_ch[p]='-';
-                p++;
-            }
-            q++;
-            index++;
-		}
+		if ((i == 1 || i+1 == len-1) && pchar[i] == '-')
+			dic[k++] = pchar[i];
+		else if (pchar[i] != '-')
+			dic[k++] = pchar[i];
 		else
-			i++;
+		{
+			++i;
+			for (char c = pchar[i - 2] + 1; c <= pchar[i]; ++c)
+				dic[k++] = c;
+		}
 	}
-	for(m=0,k=strlen(pos_ch);m<k;m++)
+
+
+	for(int i = 0, k = strlen(dic); i < k; ++i)
 	{
-		if(ch==pos_ch[m])
+		if(ch == dic[i])
 			return TRUE;
 
 	}
